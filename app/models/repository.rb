@@ -42,11 +42,15 @@ class Repository < ActiveRecord::Base
       module_result = processing.module_results.select { |module_result| module_result.kalibro_module.long_name == module_name }.first
       unless module_result.nil?
         module_result.tree_metric_results.each do |tree_metric_result|
-          history << {date: processing.updated_at, tree_metric_result: tree_metric_result, metric_result: tree_metric_result} if tree_metric_result.metric.name == metric_name
+          check_metric_name(history, metric_name, processing, tree_metric_result)
         end
       end
     end
     return history
+  end
+
+  def check_metric_name(history, metric_name, processing, tree_metric_result)
+    history << {date: processing.updated_at, tree_metric_result: tree_metric_result, metric_result: tree_metric_result} if tree_metric_result.metric.name == metric_name
   end
 
   def find_processing_by_date(date, order)
