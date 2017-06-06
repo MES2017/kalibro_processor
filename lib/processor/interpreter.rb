@@ -5,17 +5,18 @@ module Processor
     def self.task(context)
       all_module_results = context.processing.root_module_result.pre_order
 
-      all_module_results.each do | module_result_child |
+      all_module_results.each do |module_result_child|
         factors = get_factors(module_result_child.tree_metric_results)
         numerator = factors[0]
         denominator = factors[1]
+        quotient = calculate_quotient(numerator, denominator)
 
-        module_result_child.update(grade: calculate_quotient(numerator, denominator))
+        module_result_child.update(grade: quotient)
       end
     end
 
     def self.state
-      "INTERPRETING"
+      'INTERPRETING'
     end
 
     def self.get_factors(results)
@@ -35,7 +36,7 @@ module Processor
     end
 
     def self.calculate_quotient(numerator, denominator)
-      denominator == 0 ? 0 : numerator/denominator
+      denominator.zero? ? 0 : numerator / denominator
     end
 
   end
