@@ -55,7 +55,7 @@ describe Processor::Interpreter do
 
     describe 'state' do
       it 'is expected to return "INTERPRETING"' do
-        expect(Processor::Interpreter.state).to eq("INTERPRETING")
+        expect(Processor::Interpreter.state).to eq('INTERPRETING')
       end
     end
   end
